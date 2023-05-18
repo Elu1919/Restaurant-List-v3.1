@@ -14,4 +14,4 @@ const restaurantSchema = new Schema({
 })
 
 // 第一個參數，是將為模型創建的集合的單數名稱（Mongoose 將為上面的 SomeModel 模型，創建數據庫集合），第二個參數，是您要在創建模型時使用的綱要 Schema。
-mongoose.exports = mongoose.model('Restaurant', restaurantSchema)
+module.exports = mongoose.model('Restaurant', restaurantSchema)
