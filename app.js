@@ -1,10 +1,12 @@
 // require packages used in the project 
 const express = require('express')
-const restaurantList = require('./restaurant.json')
-const Model = require('./function')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 
+const restaurantList = require('./models/restaurant')
+const Model = require('./function')
+
+// setting express
 const app = express()
 const port = 3000
 
@@ -37,7 +39,10 @@ app.use(express.static('public'))
 // routes setting
 /*GET*/
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  const restaurants = restaurantList.find()
+    .lean()
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(err => console.err(err))
 })
 
 app.get('/search', (req, res) => {
