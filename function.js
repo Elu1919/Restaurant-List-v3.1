@@ -1,18 +1,24 @@
-// searchRestaurants
-function searchRestaurants(keyword) {
+const model = {
 
-  let rawRestaurants = []
+  // searchRestaurants
+  searchRestaurants(keyword) {
 
-  restaurantList.results.forEach((restaurant) => {
+    let rawRestaurants = []
 
-    const restaurantData = Object.values(restaurant)
+    restaurantList.results.forEach((restaurant) => {
 
-    if (restaurantData.toString().trim().toLocaleLowerCase().includes(keyword)) {
-      rawRestaurants.push(restaurant)
-    }
+      const restaurantData = Object.values(restaurant)
 
-  })
+      if (restaurantData.toString().trim().toLocaleLowerCase().includes(keyword)) {
+        rawRestaurants.push(restaurant)
+      }
 
-  return rawRestaurants
+    })
 
+    return rawRestaurants
+
+  },
 }
+
+
+module.exports = ('Model', model)

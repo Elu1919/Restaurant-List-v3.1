@@ -1,30 +1,12 @@
 // require packages used in the project 
 const express = require('express')
 const restaurantList = require('./restaurant.json')
+const Model = require('./function')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 
 const app = express()
 const port = 3000
-
-// function
-function searchRestaurants(keyword) {
-
-  let rawRestaurants = []
-
-  restaurantList.results.forEach((restaurant) => {
-
-    const restaurantData = Object.values(restaurant)
-
-    if (restaurantData.toString().trim().toLocaleLowerCase().includes(keyword)) {
-      rawRestaurants.push(restaurant)
-    }
-
-  })
-
-  return rawRestaurants
-
-}
 
 // setting dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -60,7 +42,7 @@ app.get('/', (req, res) => {
 
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.toString().toLocaleLowerCase().trim()
-  let restaurants = searchRestaurants(keyword)
+  let restaurants = Model.searchRestaurants(keyword)
 
   res.render('index', { restaurants: restaurants, keyword: keyword })
 })
