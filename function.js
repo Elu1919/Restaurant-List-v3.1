@@ -1,13 +1,13 @@
 const model = {
 
   // searchRestaurants
-  searchRestaurants(keyword) {
+  searchRestaurants(keyword, restaurantList) {
 
     let rawRestaurants = []
 
-    restaurantList.results.forEach((restaurant) => {
+    restaurantList.forEach((restaurant) => {
 
-      const restaurantData = Object.values(restaurant)
+      const restaurantData = Object.values(restaurantList)
 
       if (restaurantData.toString().trim().toLocaleLowerCase().includes(keyword)) {
         rawRestaurants.push(restaurant)

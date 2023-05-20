@@ -28,7 +28,7 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
-// setting template engine
+// setting template engine handlebars
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
@@ -38,6 +38,8 @@ app.use(express.static('public'))
 
 // routes setting
 /*GET*/
+
+// home
 app.get('/', (req, res) => {
   const restaurants = restaurantList.find()
     .lean()
@@ -45,19 +47,42 @@ app.get('/', (req, res) => {
     .catch(err => console.err(err))
 })
 
+// search
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.toString().toLocaleLowerCase().trim()
-  let restaurants = Model.searchRestaurants(keyword)
 
-  res.render('index', { restaurants: restaurants, keyword: keyword })
+  const keyword = req.query.keyword.toString().toLocaleLowerCase().trim()
+
+  return restaurantList.find({})
+    .lean()
+    .then(restaurantData => {
+
+      let restaurants = Model.searchRestaurants(keyword, restaurantData)
+      console.log(`data: ${restaurantData}`)
+      res.render('index', { restaurants, keyword })
+
+    })
+    .catch(err => console.log(err))
+
 })
 
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = restaurantList.results.find(restaurant => req.params.restaurant_id == restaurant.id)
-  res.render('show', { restaurant: restaurant[0] })
+// more information
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
+  return restaurantList.findById(id)
+    .lean()
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(err => console.log(err))
+})
+
+// add new restaurant
+app.get('/restaurant/new', (req, res) => {
+  return res.render('new')
 })
 
 /*POST*/
+app.post('/restaurants', (req, res) => {
+  return res.render('new')
+})
 
 
 

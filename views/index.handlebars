@@ -1,6 +1,6 @@
 <!-- search bar -->
 <div class="container search-bar">
-  <div class="search-bar-outer">
+  <div class="search-bar-outer p-3">
     <div class="search-bar-inner">
       <form action="/search">
         <h4 class="mb-2">尋找餐廳：</h4>
@@ -19,6 +19,14 @@
           </div>
         </div>
       </form>
+      <div class="d-md-flex justify-content-end mt-2">
+        <a class="btn btn-link text-danger fw-bold"
+           style="text-decoration:none"
+           href="/restaurant/new"
+           role="button">
+          <i class="fa-solid fa-square-plus mx-1"></i> add new restaurant
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -30,27 +38,54 @@
       <div class="row row-cols-sm-3">
 
         {{#each restaurants}}
-        <a href="/restaurants/{{this.id}}"
-           class="text-secondary">
+        <div class="col">
+
           <div class="card mb-3">
-            <img class="card-img-top"
-                 src="{{this.image}}"
-                 alt="{{this.name}}">
+
+            <a href="/restaurants/{{this._id}}">
+              <img class="card-img-top"
+                   src="{{this.image}}"
+                   alt="{{this.name}}">
+            </a>
+
             <div class="card-body p-3">
-              <h6 class="card-title mb-1">{{this.name}}</h6>
+
+              <a href="/restaurants/{{this._id}}"
+                 class="text-reset"
+                 style="text-decoration:none">
+                <h6 class="card-title mb-1 fw-bold">{{this.name}}</h6>
+              </a>
 
               <div class="restaurant-category mb-1">
                 <i class="fa-solid fa-utensils pr-2"></i> {{this.category}}
               </div>
 
-              <span>
+              <span class="badge bg-secondary">
                 <i class="fas fa-star fa-xs"></i>
                 {{this.rating}}
               </span>
 
             </div>
+
+            <div class="card-footer d-grid gap-2 d-md-flex justify-content-end p-3">
+
+              <button type="button"
+                      class="btn btn-link text-muted">
+                <i class="fa-solid fa-trash fa-lg"></i>
+              </button>
+
+              <a class="btn btn-secondary me-md-2"
+                 href="/restaurants/{{this._id}}"
+                 role="button">Edit</a>
+
+              <a class="btn btn-major"
+                 href="/restaurants/{{this._id}}"
+                 role="button">More</a>
+
+            </div>
           </div>
-        </a>
+        </div>
+
         {{/each}}
 
       </div>
