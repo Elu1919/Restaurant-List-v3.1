@@ -62,24 +62,30 @@
 
               <span class="badge bg-secondary">
                 <i class="fas fa-star fa-xs"></i>
-                {{this.rating}}
+                {{ this.rating }}
               </span>
 
             </div>
 
             <div class="card-footer d-grid gap-2 d-md-flex justify-content-end p-3">
 
-              <button type="button"
-                      class="btn btn-link text-muted">
-                <i class="fa-solid fa-trash fa-lg"></i>
-              </button>
+              {{! delete }}
+              <form action="/restaurants/{{ this._id }}?_method=DELETE"
+                    method="post">
+                <button class="btn btn-link text-muted"
+                        type="submit">
+                  <i class="fa-solid fa-trash fa-lg"></i>
+                </button>
+              </form>
 
-              <a class="btn btn-secondary me-md-2"
-                 href="/restaurants/{{this._id}}/edit"
-                 role="button">Edit</a>
+              {{! edit }}
+              <a class="btn btn-secondary"
+                 href="/restaurants/{{ this._id }}/edit"
+                 role="button"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
 
+              {{! more }}
               <a class="btn btn-major"
-                 href="/restaurants/{{this._id}}"
+                 href="/restaurants/{{ this._id }}"
                  role="button">More</a>
 
             </div>

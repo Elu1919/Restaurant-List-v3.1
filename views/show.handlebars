@@ -1,9 +1,54 @@
 <h1 class="mb-1 restaurant-show-title">{{restaurant.name}}</h1>
-<div class="container">
-  <div class="row">
-    <div class="col-12 col-md-10 mx-auto">
+<div class="container mx-auto mb-5"
+     style="width: 60rem;">
 
-      <p class="mb-1">
+  <nav style="--bs-breadcrumb-divider: '>';"
+       aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a class="text-reset"
+           href="/"
+           style="text-decoration:none"><i class="fa-solid fa-house fa-lg"></i> Home</a>
+      </li>
+      <li class="breadcrumb-item active"
+          aria-current="page">{{ restaurant.name }}</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+
+      <div>
+        <h4>{{ restaurant.name }}</h4>
+      </div>
+
+      <div class="d-grid gap-2 d-md-flex justify-content-end">
+
+        {{! delete }}
+        <form action="/restaurants/{{ restaurant._id }}?_method=DELETE"
+              method="post">
+          <button class="btn btn-link text-muted"
+                  type="submit">
+            <i class="fa-solid fa-trash fa-lg"></i>
+          </button>
+        </form>
+
+        {{! edit }}
+        <a class="btn btn-secondary"
+           href="/restaurants/{{ restaurant._id }}/edit"
+           role="button"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+
+        {{! back }}
+        <a class="btn btn-major"
+           href="/"
+           role="button"><i class="fa-solid fa-reply fa-lg"></i></a>
+
+      </div>
+
+    </div>
+
+    <div>
+      <p>
         <span class="text-secondary">
           <i class="fas fa-utensils pr-2"></i>
           類別：
@@ -11,7 +56,16 @@
         {{restaurant.category}}
       </p>
 
-      <p class="mb-1">
+      <img class="rounded ml-0 d-block mb-3 w-100"
+           src="{{restaurant.image}}"
+           alt="{{restaurant.name}}"
+           style="max-width: 600px;">
+
+      <p class="mb-5">
+        {{restaurant.description}}
+      </p>
+
+      <p class="mb-0">
         <span class="text-secondary">
           <i class="fas fa-map-marker-alt pr-2"></i>
           地址：
@@ -24,7 +78,7 @@
         </a>
       </p>
 
-      <p class="mb-1">
+      <p>
         <span class="text-secondary">
           <i class="fas fa-mobile-alt pr-2"></i>
           電話：
@@ -32,14 +86,6 @@
         {{restaurant.phone}}
       </p>
 
-      <p class="mb-5">
-        {{restaurant.description}}
-      </p>
-
-      <img class="rounded mx-auto d-block mb-4 w-100"
-           src="{{restaurant.image}}"
-           alt="{{restaurant.name}}"
-           style="max-width: 600px;">
     </div>
   </div>
 </div>

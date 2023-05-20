@@ -3,10 +3,10 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const methodOverride = require("method-override")
 
 const Restaurant = require('./models/restaurant')
 const Model = require('./function')
-
 
 // setting express
 const app = express()
@@ -41,10 +41,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // setting static files
 app.use(express.static('public'))
 
+// setting methodOverride 
+app.use(methodOverride("_method"))
 
-// routes setting
-/*GET*/
 
+// routes setting ////////////////////////
+
+/* GET */
 // home
 app.get('/', (req, res) => {
   Restaurant.find()
@@ -73,7 +76,7 @@ app.get('/search', (req, res) => {
 
 // more information
 app.get('/restaurants/:id', (req, res) => {
-  const id = req.params.id
+  const { id } = req.params
   return Restaurant.findById(id)
     .lean()
     .then(restaurant => res.render('show', { restaurant }))
@@ -85,9 +88,38 @@ app.get('/restaurant/new', (req, res) => {
   return res.render('new')
 })
 
-/*POST*/
+// edit restaurant info
+app.get('/restaurants/:id/edit', (req, res) => {
+  const { id } = req.params
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('edit', { restaurant }))
+    .catch(err => console.log(err))
+})
+
+/* POST */
+// add new restaurant
 app.post('/restaurants', (req, res) => {
   Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
+})
+
+
+/* PUT */
+// edit the info
+app.put('/restaurants/:id', (req, res) => {
+  const { id } = req.params
+
+  Restaurant.findByIdAndUpdate(id, req.body)
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(err => console.log(err))
+})
+
+/* DELETE */
+app.delete('/restaurants/:id', (req, res) => {
+  const { id } = req.params
+  Restaurant.findByIdAndDelete(id)
     .then(() => res.redirect('/'))
     .catch(err => console.log(err))
 })
