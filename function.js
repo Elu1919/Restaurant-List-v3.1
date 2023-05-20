@@ -7,7 +7,7 @@ const model = {
 
     restaurantList.forEach((restaurant) => {
 
-      const restaurantData = Object.values(restaurantList)
+      const restaurantData = Object.values(restaurant)
 
       if (restaurantData.toString().trim().toLocaleLowerCase().includes(keyword)) {
         rawRestaurants.push(restaurant)

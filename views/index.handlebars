@@ -3,12 +3,16 @@
   <div class="search-bar-outer p-3">
     <div class="search-bar-inner">
       <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
+        <a class="text-reset"
+           href="/"
+           style="text-decoration:none">
+          <h4 class="mb-2">尋找餐廳：</h4>
+        </a>
         <div class="input-group">
           <input type="text"
                  name="keyword"
                  class="form-control"
-                 placeholder="輸入餐廳、分類"
+                 placeholder="輸入餐廳、分類、地點...等關鍵字"
                  aria-label="Restaurant Name..."
                  aria-describedby="search-button"
                  value="{{keyword}}">

@@ -61,15 +61,12 @@ app.get('/search', (req, res) => {
 
   const keyword = req.query.keyword.toString().toLocaleLowerCase().trim()
 
-  return Restaurant.find({})
+  Restaurant.find()
     .lean()
     .then(restaurantData => {
-
-      let restaurants = Model.searchRestaurants(keyword, restaurantData)
-      console.log(`data: ${restaurantData}`)
-      res.render('index', { restaurants, keyword })
-
+      return Model.searchRestaurants(keyword, restaurantData)
     })
+    .then(restaurants => res.render('index', { restaurants, keyword }))
     .catch(err => console.log(err))
 
 })
