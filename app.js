@@ -2,9 +2,11 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
-const restaurantList = require('./models/restaurant')
+const Restaurant = require('./models/restaurant')
 const Model = require('./function')
+
 
 // setting express
 const app = express()
@@ -32,6 +34,10 @@ db.once('open', () => {
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+// setting body-parser
+app.use(bodyParser.urlencoded({ extended: true }))
+
+
 // setting static files
 app.use(express.static('public'))
 
@@ -41,10 +47,10 @@ app.use(express.static('public'))
 
 // home
 app.get('/', (req, res) => {
-  const restaurants = restaurantList.find()
+  Restaurant.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
-    .catch(err => console.err(err))
+    .catch(err => console.log(err))
 })
 
 // search
@@ -52,7 +58,7 @@ app.get('/search', (req, res) => {
 
   const keyword = req.query.keyword.toString().toLocaleLowerCase().trim()
 
-  return restaurantList.find({})
+  return Restaurant.find({})
     .lean()
     .then(restaurantData => {
 
@@ -68,7 +74,7 @@ app.get('/search', (req, res) => {
 // more information
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
-  return restaurantList.findById(id)
+  return Restaurant.findById(id)
     .lean()
     .then(restaurant => res.render('show', { restaurant }))
     .catch(err => console.log(err))
@@ -81,9 +87,10 @@ app.get('/restaurant/new', (req, res) => {
 
 /*POST*/
 app.post('/restaurants', (req, res) => {
-  return res.render('new')
+  Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
 })
-
 
 
 // start and listen on the Express server
