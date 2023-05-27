@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const methodOverride = require("method-override")
+const routes = require('./routes')
 
 const Restaurant = require('./models/restaurant')
 const Model = require('./function')
@@ -11,6 +12,9 @@ const Model = require('./function')
 // setting express
 const app = express()
 const port = 3000
+
+// setting routes
+app.use(routes)
 
 // setting dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -43,83 +47,6 @@ app.use(express.static('public'))
 
 // setting methodOverride 
 app.use(methodOverride("_method"))
-
-
-// routes setting ////////////////////////
-
-/* GET */
-// home
-app.get('/', (req, res) => {
-  Restaurant.find()
-    .lean()
-    .then(restaurants => res.render('index', { restaurants }))
-    .catch(err => console.log(err))
-})
-
-// search
-app.get('/search', (req, res) => {
-
-  const keyword = req.query.keyword.toString().toLocaleLowerCase().trim()
-
-  Restaurant.find()
-    .lean()
-    .then(restaurantData => {
-      return Model.searchRestaurants(keyword, restaurantData)
-    })
-    .then(restaurants => res.render('index', { restaurants, keyword }))
-    .catch(err => console.log(err))
-
-})
-
-// more information
-app.get('/restaurants/:id', (req, res) => {
-  const { id } = req.params
-  return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('show', { restaurant }))
-    .catch(err => console.log(err))
-})
-
-// add new restaurant
-app.get('/restaurant/new', (req, res) => {
-  return res.render('new')
-})
-
-// edit restaurant info
-app.get('/restaurants/:id/edit', (req, res) => {
-  const { id } = req.params
-  return Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render('edit', { restaurant }))
-    .catch(err => console.log(err))
-})
-
-/* POST */
-// add new restaurant
-app.post('/restaurants', (req, res) => {
-  Restaurant.create(req.body)
-    .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
-})
-
-
-/* PUT */
-// edit the info
-app.put('/restaurants/:id', (req, res) => {
-  const { id } = req.params
-
-  Restaurant.findByIdAndUpdate(id, req.body)
-    .then(() => res.redirect(`/restaurants/${id}`))
-    .catch(err => console.log(err))
-})
-
-/* DELETE */
-app.delete('/restaurants/:id', (req, res) => {
-  const { id } = req.params
-  Restaurant.findByIdAndDelete(id)
-    .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
-})
 
 
 // start and listen on the Express server

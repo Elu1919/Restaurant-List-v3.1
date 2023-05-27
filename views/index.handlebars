@@ -26,7 +26,7 @@
       <div class="d-md-flex justify-content-end mt-2">
         <a class="btn btn-link text-danger fw-bold"
            style="text-decoration:none"
-           href="/restaurant/new"
+           href="/restaurants/new"
            role="button">
           <i class="fa-solid fa-square-plus mx-1"></i> add new restaurant
         </a>
@@ -39,6 +39,32 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
+
+      <!-- dropbox -->
+      <div class="dropdown d-flex justify-content-end mb-3">
+        <button class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+          Sort
+        </button>
+        <ul class="dropdown-menu"
+            aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item"
+               href="#">name: A to Z</a></li>
+          <li><a class="dropdown-item"
+               href="#">name: Z to A</a></li>
+          <li><a class="dropdown-item"
+               href="#">category</a></li>
+          <li><a class="dropdown-item"
+               href="#">location</a></li>
+        </ul>
+        <div class="ms-2 align-self-center">
+          <span class="mt-auto fw-bold text-secondary">name: A to Z</span>
+        </div>
+      </div>
+
       <div class="row row-cols-sm-3">
 
         {{#each restaurants}}
