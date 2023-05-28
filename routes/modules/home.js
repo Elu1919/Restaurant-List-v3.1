@@ -1,5 +1,7 @@
 const express = require('express')
 const Restaurant = require('../../models/restaurant')
+const Model = require('../../function')
+
 const router = express.Router()
 
 // home

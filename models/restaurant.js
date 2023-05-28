@@ -9,7 +9,7 @@ const restaurantSchema = new Schema({
   location: { type: String, required: true },
   phone: { type: String, required: true },
   google_map: { type: String },
-  rating: { type: Number, required: true },
+  rating: { type: String, required: true },
   description: { type: String },
 })
 

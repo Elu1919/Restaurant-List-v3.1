@@ -1,23 +1,9 @@
-const mongoose = require('mongoose')
-const restaurantList = require('../restaurant')
+const Restaurant = require('../restaurant')
 const restaurantList = require('../../restaurant.json').results
-
-// setting dotenv
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
-
-// setting mongoose
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('mongodb error!')
-})
+const db = require('../../config/mongoose')
 
 db.once('open', () => {
-  console.log('mongodb connected!')
+  console.log("running restaurantSeeder script...")
 
   Restaurant.create(restaurantList)
     .then(() => {
