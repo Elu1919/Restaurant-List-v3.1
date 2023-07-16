@@ -8,6 +8,46 @@ const router = express.Router()
 router.get('/', (req, res) => {
   Restaurant.find()
     .lean()
+    .sort({ _id: 'desc' })
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(err => console.log(err))
+})
+
+// sort
+router.get('/sort/:sortType', (req, res) => {
+  const { sortType } = req.params
+  let sorts = ""
+  let mode = ""
+
+  switch (sortType) {
+    case "atoz":
+      sorts = "name"
+      mode = "ace"
+      break
+
+    case "ztoa":
+      sorts = "name"
+      mode = "des"
+      break
+
+    case "category":
+      sorts = "category"
+      mode = "ace"
+      break
+
+    case "location":
+      sorts = "location"
+      mode = "ace"
+      break
+  }
+
+  console.log(sortType)
+  console.log(sorts)
+  console.log(mode)
+
+  Restaurant.find()
+    .lean()
+    .sort({ sorts: mode })
     .then(restaurants => res.render('index', { restaurants }))
     .catch(err => console.log(err))
 })
@@ -25,6 +65,11 @@ router.get('/search', (req, res) => {
     .then(restaurants => res.render('index', { restaurants, keyword }))
     .catch(err => console.log(err))
 
+})
+
+// add new restaurant
+router.get('/new', (req, res) => {
+  return res.render('new')
 })
 
 module.exports = router

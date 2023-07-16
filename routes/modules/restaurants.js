@@ -12,11 +12,6 @@ router.get('/:id', (req, res) => {
     .catch(err => console.log(err))
 })
 
-// add new restaurant
-router.get('/new', (req, res) => {
-  return res.render('new')
-})
-
 // edit restaurant info
 router.get('/:id/edit', (req, res) => {
   const { id } = req.params
