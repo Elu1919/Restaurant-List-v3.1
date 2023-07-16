@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // setting express-session
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
