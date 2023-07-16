@@ -5,6 +5,7 @@ const methodOverride = require("method-override")
 const bodyParser = require('body-parser')
 const routes = require('./routes')
 const session = require('express-session')
+const usePassport = require('./config/passport')
 
 require('./config/mongoose')
 
@@ -21,6 +22,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+
+// use passport
+usePassport(app)
 
 // setting routes
 app.use(routes)
