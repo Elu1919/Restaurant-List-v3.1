@@ -6,7 +6,10 @@ const router = express.Router()
 
 // home
 router.get('/', (req, res) => {
-  Restaurant.find()
+
+  const userId = req.user._id
+
+  Restaurant.find({ userId })
     .lean()
     .sort({ _id: 'desc' })
     .then(restaurants => res.render('index', { restaurants }))

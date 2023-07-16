@@ -40,13 +40,11 @@ app.use((req, res, next) => {
   next()
 })
 
-// setting routes
-app.use(routes)
-
 // setting methodOverride 
 app.use(methodOverride("_method"))
 
-
+// setting routes
+app.use(routes)
 
 // start and listen on the Express server
 app.listen(port, () => {

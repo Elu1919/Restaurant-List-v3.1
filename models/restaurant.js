@@ -11,6 +11,12 @@ const restaurantSchema = new Schema({
   google_map: { type: String },
   rating: { type: String, required: true },
   description: { type: String },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    required: true
+  },
 })
 
 // 第一個參數，是將為模型創建的集合的單數名稱（Mongoose 將為上面的 SomeModel 模型，創建數據庫集合），第二個參數，是您要在創建模型時使用的綱要 Schema。
