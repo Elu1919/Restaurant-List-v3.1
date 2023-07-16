@@ -1,6 +1,5 @@
 const express = require('express')
 const Restaurant = require('../../models/restaurant')
-const restaurant = require('../../models/restaurant')
 const router = express.Router()
 
 /* GET */
